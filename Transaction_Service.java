@@ -16,25 +16,13 @@ import java.util.stream.Collectors;
 public class Transaction_Service {
     @Autowired
     private transation_Repository customerRepository;
-    /*
-     ********************
-    * If an exception occurs within @Transactional methods,
-    * Spring will automatically roll back the transaction
-    ********************
-             */
+   
 
     @Transactional
     public Transaction_Register SaveTransaction(Transaction_Register transactionRegister, String currency) {
     System.out.println(ExcahangeRateConversion_Service.RateConversion());
     System.out.println(currency);
-        /*
-         ********************
-         * Initially saving all data in table
-         * as INR, If user enters USD amount
-         * it'll be converted into INR then
-         * saved into DB.
-         ********************
-         * */
+      
         try {
             if (("\"USD\"").equals(currency)) {
                 System.out.println(ExcahangeRateConversion_Service.RateConversion());
@@ -50,13 +38,7 @@ public class Transaction_Service {
     }
     private void convertAmounts(Transaction_Register transactionRegister) {
     BigDecimal usdRate = ExcahangeRateConversion_Service.RateConversion();
-        /*
-         ********************
-         * handling null values
-         * for credit and debit amounts
-         * to ensure consistency
-         ********************
-         * */
+       
 
 
     if (transactionRegister.getCredit_amount()==null || transactionRegister.getCredit_amount().isEmpty())
@@ -70,25 +52,14 @@ public class Transaction_Service {
     BigDecimal debitAmount = new BigDecimal(transactionRegister.getDebit_amount()).multiply(usdRate);
     transactionRegister.setDebit_amount(debitAmount.toString());
     }
-    /*
-     ********************
-     * finding all transaction
-     * records by date
-     ********************
-     * */
+  
     @Transactional(readOnly = true)
     public List<Transaction_Register> getAllTransactionsByDate(LocalDate date){
 
         return customerRepository.findByDate(date);
 
     }
-    /*
-     ********************
-     * to fetch daily(today's)
-     * transaction
-     * report
-     ********************
-     * */
+    
     @Transactional(readOnly = true)
     public Map<LocalDate, List<Transaction_Register>> getDailyReports() {
         List<Transaction_Register> allTransactions = customerRepository.findAll();
@@ -96,14 +67,7 @@ public class Transaction_Service {
                 .collect(Collectors.groupingBy(Transaction_Register::getDate));
     }
 
-    /*
-     ********************
-     * to update
-     * daily
-     * transaction
-     * report by id
-     ********************
-     * */
+  
     @Transactional
     public void updateTransaction(Long id, Transaction_Register transactionRegister) {
         Transaction_Register existingCustomer = customerRepository.findById(id).orElse(null);
@@ -113,14 +77,7 @@ public class Transaction_Service {
         }
 
     }
-    /*
-     ********************
-     * to delete
-     * daily
-     * transaction
-     * report by id
-     ********************
-     * */
+  
     @Transactional
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
