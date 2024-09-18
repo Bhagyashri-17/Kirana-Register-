@@ -19,7 +19,7 @@ public class ExcahangeRateConversion_Service {
         try {
             URI uri = URI.create(API_URL);
 
-            // sending HTTP request
+           
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
                     .header("Content-Type", "application/json")
@@ -28,13 +28,12 @@ public class ExcahangeRateConversion_Service {
 
             HttpClient client = HttpClient.newHttpClient();
 
-            // Sending the request and receiving the response
+           
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             ObjectMapper objectMapper = new ObjectMapper();
             ExchangeRateResponse exchangeRateResponse = objectMapper.readValue(response.body(), ExchangeRateResponse.class);
             
-            // Get the exchange rate for INR
             BigDecimal inrRate = exchangeRateResponse.getRateForCurrency("INR");
 
             return inrRate;
