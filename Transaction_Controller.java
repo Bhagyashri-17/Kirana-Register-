@@ -13,10 +13,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(path = "/KiranaRegisterAPI")
 public class Transaction_Controller {
-    /*
-    * Refer API_Documentation file path :
-    *  resources/static/API_Documentation
-    * */
+ 
 
     @Autowired
     private transation_Repository customerRepository;
