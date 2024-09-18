@@ -11,16 +11,11 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "customer_register")
 public class Transaction_Register {
-   /*
- ********************
-    We are using SQL Database to store all transaction data
-    * (PostgreSQL - pgAdmin4)
- ********************
- * */
+ 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;                   // key to identify transaction
+    private Long id;                   
     private String name;
     private String description;
     private String credit_amount;
