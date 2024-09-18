@@ -13,13 +13,7 @@ import java.util.Map;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExchangeRateResponse {
-    /*
-********************
-  collecting response from API for currency conversion
-  - https://api.fxratesapi.com/latest.
 
-********************
-* */
     private String base;
     private Map<String, BigDecimal> rates;
 
